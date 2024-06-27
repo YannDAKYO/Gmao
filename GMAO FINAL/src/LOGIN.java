@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.SystemColor;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,8 +55,9 @@ public class LOGIN {
     JPanel panelDevis;
     JPanel panelMod_Devis;
     JPanel panelTicket;
-    JPanel panelResquet;
-    
+    JPanel panelRequest;
+    JPanel panelAcceuil; 
+    //JPanel panelAccueil;
     
     private JTable table_1;
     private JTable table_2;
@@ -226,14 +228,17 @@ public class LOGIN {
         // APPELER LA METHODE AFFICHER CUSTOMER
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showPanelAddCUst();
+            	switchPanel(panelAddCUst);
+            	//showPanelAddCUst();
+            	
             }
         });
 
         JButton btnNewButton_1_1 = new JButton("Operator");
         btnNewButton_1_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		showpanelAddOperator();//afficher le panel operator
+        		switchPanel(panelAddOperator);
+        		//showpanelAddOperator();//afficher le panel operator
         	}
         });
         btnNewButton_1_1.setBounds(38, 136, 182, 21);
@@ -242,7 +247,8 @@ public class LOGIN {
         JButton btnNewButton_2 = new JButton("Management");
         btnNewButton_2.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		showpanelDevis();
+        		switchPanel(panelDevis);
+        		//showpanelDevis();
         	}
         });
         btnNewButton_2.setBounds(38, 231, 182, 21);
@@ -251,7 +257,8 @@ public class LOGIN {
         JButton btnNewButton_3 = new JButton("Ticket tracking");
         btnNewButton_3.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		showpanelTicket();
+        		switchPanel(panelTicket);
+        		//showpanelTicket();
         	}
         });
         btnNewButton_3.setBounds(38, 337, 182, 21);
@@ -260,13 +267,14 @@ public class LOGIN {
         JButton btnNewButton_3_1 = new JButton("Maintenance Request");
         btnNewButton_3_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		showpanelResquet();
+        		switchPanel(panelRequest);
+        		//showpanelResquet();
         	}
         });
         btnNewButton_3_1.setBounds(38, 435, 182, 21);
         desktopPane_1.add(btnNewButton_3_1);
 
-        JPanel panelAcceuil = new JPanel();
+        panelAcceuil = new JPanel();
         panelAcceuil.setBackground(new Color(222, 184, 135));
         panelAcceuil.setBounds(259, 24, 616, 509);
         Principal.add(panelAcceuil);
@@ -344,6 +352,8 @@ public class LOGIN {
         JButton btnNewButton_4 = new JButton("Add customer");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//switchPanel(panelAddCUst);
+				showpanelAddCUst();
 			}
 		});
 		btnNewButton_4.setBackground(Color.LIGHT_GRAY);
@@ -355,6 +365,7 @@ public class LOGIN {
 		btnNewButton_4_1.setBounds(344, 59, 317, 44);
 		btnNewButton_4_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//switchPanel(panelDisplayList);
 				showPanelDisplayList();
 			}
 		});
@@ -604,7 +615,7 @@ public class LOGIN {
         panelManLabel.setBounds(0, 0, 661, 57);
         panelDevis.add(panelManLabel);
         
-        JLabel lblNewLabel_3 = new JLabel("Operator");
+        JLabel lblNewLabel_3 = new JLabel("Quote");
         lblNewLabel_3.setBounds(313, 10, 96, 25);
         panelManLabel.add(lblNewLabel_3);
         
@@ -865,91 +876,103 @@ public class LOGIN {
         label_4_1.setBounds(547, 194, 67, 21);
         panelTicket.add(label_4_1);
         
-        panelResquet = new JPanel();
-        panelResquet.setLayout(null);
-        panelResquet.setBackground(new Color(244, 164, 96));
-        panelResquet.setBounds(0, 0, 663, 512);
-        panelResquet.setVisible(false);
-        panelAcceuil.add(panelResquet);
+         panelRequest = new JPanel();
+        panelRequest.setLayout(null);
+        panelRequest.setBackground(new Color(244, 164, 96));
+        panelRequest.setBounds(0, 0, 663, 522);
+        panelRequest.setVisible(false);
+        panelAcceuil.add(panelRequest);
         
         JDesktopPane desktopPane_2 = new JDesktopPane();
         desktopPane_2.setBackground(Color.BLUE);
-        desktopPane_2.setBounds(61, 49, 546, 92);
-        panelResquet.add(desktopPane_2);
+        desktopPane_2.setBounds(0, 0, 663, 67);
+        panelRequest.add(desktopPane_2);
         
         JLabel lblNewLabel_8 = new JLabel("MAINTENANCE REQUEST");
-        lblNewLabel_8.setBounds(214, 23, 190, 48);
+        lblNewLabel_8.setBounds(268, 10, 190, 48);
         desktopPane_2.add(lblNewLabel_8);
         
         textField_15 = new JTextField();
         textField_15.setColumns(10);
-        textField_15.setBounds(100, 177, 96, 19);
-        panelResquet.add(textField_15);
+        textField_15.setBounds(101, 120, 96, 19);
+        panelRequest.add(textField_15);
         
         textField_16 = new JTextField();
         textField_16.setColumns(10);
-        textField_16.setBounds(254, 218, 348, 19);
-        panelResquet.add(textField_16);
+        textField_16.setBounds(254, 171, 239, 19);
+        panelRequest.add(textField_16);
         
         textField_17 = new JTextField();
         textField_17.setColumns(10);
-        textField_17.setBounds(254, 262, 348, 19);
-        panelResquet.add(textField_17);
+        textField_17.setBounds(255, 217, 238, 19);
+        panelRequest.add(textField_17);
         
         textField_18 = new JTextField();
         textField_18.setColumns(10);
-        textField_18.setBounds(254, 305, 348, 19);
-        panelResquet.add(textField_18);
+        textField_18.setBounds(255, 262, 238, 19);
+        panelRequest.add(textField_18);
         
         textField_19 = new JTextField();
         textField_19.setColumns(10);
-        textField_19.setBounds(10, 359, 643, 92);
-        panelResquet.add(textField_19);
+        textField_19.setBounds(30, 319, 575, 92);
+        panelRequest.add(textField_19);
         
         textField_20 = new JTextField();
         textField_20.setColumns(10);
-        textField_20.setBounds(537, 177, 96, 19);
-        panelResquet.add(textField_20);
+        textField_20.setBounds(538, 120, 78, 19);
+        panelRequest.add(textField_20);
         
         textField_21 = new JTextField();
         textField_21.setColumns(10);
-        textField_21.setBounds(351, 151, 96, 19);
-        panelResquet.add(textField_21);
+        textField_21.setBounds(310, 91, 96, 19);
+        panelRequest.add(textField_21);
         
         JLabel lblNewLabel_1_2 = new JLabel("DATE :");
-        lblNewLabel_1_2.setBounds(45, 178, 45, 16);
-        panelResquet.add(lblNewLabel_1_2);
+        lblNewLabel_1_2.setBounds(46, 121, 45, 16);
+        panelRequest.add(lblNewLabel_1_2);
         
         JLabel lblNewLabel_2_1 = new JLabel("Resquestin agency :");
-        lblNewLabel_2_1.setBounds(100, 218, 144, 19);
-        panelResquet.add(lblNewLabel_2_1);
+        lblNewLabel_2_1.setBounds(100, 171, 144, 19);
+        panelRequest.add(lblNewLabel_2_1);
         
         JLabel lblNewLabel_5_1 = new JLabel("Reason for request :");
-        lblNewLabel_5_1.setBounds(10, 334, 124, 13);
-        panelResquet.add(lblNewLabel_5_1);
-       
-        
-        
+        lblNewLabel_5_1.setBounds(30, 296, 124, 13);
+        panelRequest.add(lblNewLabel_5_1);
         
         JLabel lblNewLabel_6_1 = new JLabel("TIME : ");
-        lblNewLabel_6_1.setBounds(474, 177, 57, 19);
-        panelResquet.add(lblNewLabel_6_1);
+        lblNewLabel_6_1.setBounds(475, 120, 57, 19);
+        panelRequest.add(lblNewLabel_6_1);
         
         JLabel lblNewLabel_3_2 = new JLabel("Name of Resquestin :");
-        lblNewLabel_3_2.setBounds(100, 262, 144, 19);
-        panelResquet.add(lblNewLabel_3_2);
+        lblNewLabel_3_2.setBounds(101, 217, 144, 19);
+        panelRequest.add(lblNewLabel_3_2);
         
         JLabel lblNewLabel_4_1 = new JLabel("Location :");
-        lblNewLabel_4_1.setBounds(100, 305, 101, 19);
-        panelResquet.add(lblNewLabel_4_1);
+        lblNewLabel_4_1.setBounds(101, 262, 101, 19);
+        panelRequest.add(lblNewLabel_4_1);
         
         JLabel lblNewLabel_7_1 = new JLabel("N° :");
-        lblNewLabel_7_1.setBounds(311, 154, 45, 16);
-        panelResquet.add(lblNewLabel_7_1);
+        lblNewLabel_7_1.setBounds(270, 94, 45, 16);
+        panelRequest.add(lblNewLabel_7_1);
         
         JButton btnNewButton_6 = new JButton("Submit");
         btnNewButton_6.setBounds(535, 474, 99, 28);
-        panelResquet.add(btnNewButton_6);
+        panelRequest.add(btnNewButton_6);
+        
+        JRadioButton PreventiveButton = new JRadioButton("Preventive");
+        PreventiveButton.setBackground(new Color(244, 164, 96));
+        PreventiveButton.setBounds(46, 428, 103, 21);
+        panelRequest.add(PreventiveButton);
+        
+        JRadioButton PaliativeButton = new JRadioButton("Paliative");
+        PaliativeButton.setBackground(new Color(244, 164, 96));
+        PaliativeButton.setBounds(249, 428, 103, 21);
+        panelRequest.add(PaliativeButton);
+        
+        JRadioButton CurativeButton = new JRadioButton("Curative");
+        CurativeButton.setBackground(new Color(244, 164, 96));
+        CurativeButton.setBounds(487, 428, 103, 21);
+        panelRequest.add(CurativeButton);
     }
 
     private void clearPanelAndShowPrincipal() {
@@ -960,9 +983,11 @@ public class LOGIN {
     }
 
     private void showPanelAddCUst() {
-        Principal.setVisible(true);
+       Principal.setVisible(true);
         panelAddCUst.setVisible(true);
         panelDisplayList_1.setVisible(false);
+    	
+    	
     }
     
     private void showPanelDisplayList() {
@@ -994,7 +1019,54 @@ public class LOGIN {
      
     private void showpanelResquet() {
     	panelTicket.setVisible(false);
-    	panelResquet.setVisible(true);	
+    	panelRequest.setVisible(true);	
     }
+  
+    private void showpanelAddCUst() {
+    	panelDisplayList_1.setVisible(false);
+    	panelAddCUst.setVisible(true);	
+    }
+    
+    
+    private void switchPanel(JPanel newPanel) {
+        // Récupérer le panel actuellement affiché dans panelAccueil
+        Component[] components = panelAcceuil.getComponents();
+        for (Component component : components) {
+            if (component.isVisible() && component instanceof JPanel) {
+                JPanel currentPanel = (JPanel) component;
+                // Rendre le panel actuel invisible
+                currentPanel.setVisible(false);
+                break;
+            }
+        }
+
+        // Rendre le nouveau panel visible dans panelAccueil
+        newPanel.setVisible(true);
+        panelAcceuil.add(newPanel);
+        panelAcceuil.revalidate();
+        panelAcceuil.repaint();
+    }
+
+    
+    
+   /* private void switchPanel() {
+        // Récupérer le panel actuellement affiché dans panelAccueil
+        Component[] components = panelAcceuil.getComponents();
+        for (Component component : components) {
+            if (component.isVisible() && component instanceof JPanel) {
+                JPanel currentPanel = (JPanel) component;
+                // Rendre le panel actuel invisible
+                currentPanel.setVisible(false);
+                break;
+            }
+        }
+
+        // Rendre le nouveau panel visible dans panelAccueil
+        panelRequest.setVisible(true);
+        panelAcceuil.add(panelRequest);
+        panelAcceuil.revalidate();
+        panelAcceuil.repaint();
+    }
+    */
 
 }
