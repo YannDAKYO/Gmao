@@ -27,6 +27,7 @@ import java.awt.Label;
 import java.awt.TextField;
 import javax.swing.SwingConstants;
 import javax.swing.JEditorPane;
+import javax.swing.ButtonGroup;
 
 public class LOGIN {
 
@@ -57,7 +58,10 @@ public class LOGIN {
     JPanel panelTicket;
     JPanel panelRequest;
     JPanel panelAcceuil; 
-    //JPanel panelAccueil;
+    JPanel PrincipalOp;
+    JPanel panel_1;
+    JLayeredPane loginPane;
+    
     
     private JTable table_1;
     private JTable table_2;
@@ -69,6 +73,7 @@ public class LOGIN {
     private JTextField textField_19;
     private JTextField textField_20;
     private JTextField textField_21;
+    private final ButtonGroup buttonGroup = new ButtonGroup();
     /**
      * Launch the application.
      */
@@ -107,7 +112,7 @@ public class LOGIN {
         frame.getContentPane().add(panel);
         panel.setLayout(null);
 
-        JLayeredPane loginPane = new JLayeredPane();
+         loginPane = new JLayeredPane();
         loginPane.setBorder(UIManager.getBorder("InternalFrame.border"));
         loginPane.setBounds(227, 100, 428, 336);
         panel.add(loginPane);
@@ -125,20 +130,30 @@ public class LOGIN {
         textField.setBounds(108, 108, 205, 19);
         loginPane.add(textField);
 
-        JRadioButton rdbtnNewRadioButton = new JRadioButton("MANAGER");
-        rdbtnNewRadioButton.setBackground(SystemColor.controlLtHighlight);
-        rdbtnNewRadioButton.setBounds(34, 226, 103, 21);
-        loginPane.add(rdbtnNewRadioButton);
+        JRadioButton ManagerButton = new JRadioButton("MANAGER");
+        buttonGroup.add(ManagerButton);
+        ManagerButton.setBackground(SystemColor.controlLtHighlight);
+        ManagerButton.setBounds(34, 226, 103, 21);
+        loginPane.add(ManagerButton);
 
-        JRadioButton rdbtnOperator = new JRadioButton("OPERATOR");
-        rdbtnOperator.setBackground(SystemColor.controlLtHighlight);
-        rdbtnOperator.setBounds(168, 226, 103, 21);
-        loginPane.add(rdbtnOperator);
-
+        JRadioButton OperatorButton = new JRadioButton("OPERATOR");
+        buttonGroup.add(OperatorButton);
+        OperatorButton.setBackground(SystemColor.controlLtHighlight);
+        OperatorButton.setBounds(168, 226, 103, 21);
+        loginPane.add(OperatorButton);
+////////////////////////////////////////////////////////////////////////////////////
+        
         JButton btnNewButton = new JButton("Submit");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                clearPanelAndShowPrincipal();
+                if (ManagerButton.isSelected()==true)
+                {
+            	clearPanelAndShowPrincipal();
+                }
+                else if (OperatorButton.isSelected()==true)
+                {
+                	clearPanelAndShowPrincipalOp();
+                }
             }
         });
         btnNewButton.setBackground(SystemColor.activeCaptionBorder);
@@ -155,10 +170,11 @@ public class LOGIN {
         passwordField.setBounds(107, 117, 207, 19);
         desktopPane.add(passwordField);
         
-                JRadioButton rdbtnCustomer = new JRadioButton("ADMINISTRATEUR");
-                rdbtnCustomer.setBounds(284, 189, 124, 21);
-                desktopPane.add(rdbtnCustomer);
-                rdbtnCustomer.setBackground(SystemColor.controlLtHighlight);
+                JRadioButton CustomerButton = new JRadioButton("ADMINISTRATEUR");
+                buttonGroup.add(CustomerButton);
+                CustomerButton.setBounds(284, 189, 138, 21);
+                desktopPane.add(CustomerButton);
+                CustomerButton.setBackground(SystemColor.controlLtHighlight);
 
         JLabel lblNewLabel = new JLabel("LOGIN");
         lblNewLabel.setBounds(199, 10, 72, 18);
@@ -177,10 +193,16 @@ public class LOGIN {
         Principal.setVisible(false); // Initially hidden
         frame.getContentPane().add(Principal);
 
-        Button button = new Button("Log off");
-        button.setBackground(Color.BLUE);
-        button.setBounds(683, -3, 85, 21);
-        Principal.add(button);
+        Button LogOffButton = new Button("Log off");
+        LogOffButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		panel.remove(Principal);
+        		
+        	}
+        });
+        LogOffButton.setBackground(Color.BLUE);
+        LogOffButton.setBounds(683, -3, 85, 21);
+        Principal.add(LogOffButton);
 
         Button button_1 = new Button("New");
         button_1.setBackground(Color.BLUE);
@@ -431,6 +453,11 @@ public class LOGIN {
         panel_1_1.add(lblNewLabel_3_1);
         
         JButton btnNewButton_4_2 = new JButton("Add customer");
+        btnNewButton_4_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		switchPanel(panelAddCUst);
+        	}
+        });
         btnNewButton_4_2.setBackground(Color.LIGHT_GRAY);
         btnNewButton_4_2.setBounds(0, 58, 344, 50);
         panelDisplayList_1.add(btnNewButton_4_2);
@@ -465,6 +492,11 @@ public class LOGIN {
         panel_op.add(lblNewLabel_2);
         
         JButton btnNewButton_4_3 = new JButton("Add Operator");
+        btnNewButton_4_3.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        	}
+        });
         btnNewButton_4_3.setBackground(Color.LIGHT_GRAY);
         btnNewButton_4_3.setBounds(0, 59, 344, 44);
         panelAddOperator.add(btnNewButton_4_3);
@@ -472,7 +504,8 @@ public class LOGIN {
         JButton btnNewButton_4_1_2 = new JButton("Display List");
         btnNewButton_4_1_2.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		showpanelListOperateur();
+        		switchPanel(panelListOperateur);
+        		//showpanelListOperateur();
         	}
         });
         btnNewButton_4_1_2.setBackground(new Color(220, 220, 220));
@@ -562,6 +595,11 @@ public class LOGIN {
         panel_op_list.add(lblNewLabel_4);
         
         JButton btnNewButton_4_4 = new JButton("Add Operator");
+        btnNewButton_4_4.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		switchPanel(panelAddOperator);
+        	}
+        });
         btnNewButton_4_4.setBackground(Color.LIGHT_GRAY);
         btnNewButton_4_4.setBounds(0, 59, 344, 44);
         panelListOperateur.add(btnNewButton_4_4);
@@ -719,11 +757,21 @@ public class LOGIN {
         panelManLabel_1.add(lblNewLabel_5);
         
         JButton btnNewButton_4_2_2 = new JButton("Quote");
+        btnNewButton_4_2_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		switchPanel(panelDevis);
+        	}
+        });
         btnNewButton_4_2_2.setBackground(SystemColor.activeCaptionBorder);
         btnNewButton_4_2_2.setBounds(0, 59, 344, 44);
         panelMod_Devis.add(btnNewButton_4_2_2);
         
         JButton btnNewButton_4_1_1_2 = new JButton("Modifiy quote");
+        btnNewButton_4_1_1_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		switchPanel(panelMod_Devis);
+        	}
+        });
         btnNewButton_4_1_1_2.setBackground(SystemColor.activeCaptionBorder);
         btnNewButton_4_1_1_2.setBounds(343, 59, 318, 44);
         panelMod_Devis.add(btnNewButton_4_1_1_2);
@@ -973,6 +1021,175 @@ public class LOGIN {
         CurativeButton.setBackground(new Color(244, 164, 96));
         CurativeButton.setBounds(487, 428, 103, 21);
         panelRequest.add(CurativeButton);
+        
+        PrincipalOp = new JPanel();
+        PrincipalOp.setLayout(null);
+        PrincipalOp.setBackground(new Color(244, 164, 96));
+        PrincipalOp.setBounds(0, 0, 832, 550);
+        PrincipalOp.setVisible(false);
+        frame.getContentPane().add(PrincipalOp);
+        
+        JDesktopPane desktopPane_3 = new JDesktopPane();
+        desktopPane_3.setBorder(UIManager.getBorder("Tree.editorBorder"));
+        desktopPane_3.setBackground(new Color(222, 184, 135));
+        desktopPane_3.setBounds(0, 37, 253, 513);
+        PrincipalOp.add(desktopPane_3);
+        
+        JButton btnNewButton_8 = new JButton("Ticket ");
+        btnNewButton_8.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		showPanel_1();        	}
+        });
+        btnNewButton_8.setBounds(61, 148, 143, 42);
+        desktopPane_3.add(btnNewButton_8);
+        
+        JButton btnNewButton_1_2 = new JButton("Operator");
+        btnNewButton_1_2.setBounds(61, 308, 143, 42);
+        desktopPane_3.add(btnNewButton_1_2);
+        
+        Button button_1_5 = new Button("New");
+        button_1_5.setBackground(SystemColor.textHighlight);
+        button_1_5.setBounds(147, 0, 67, 21);
+        PrincipalOp.add(button_1_5);
+        
+        Button button_2_1_1 = new Button(">");
+        button_2_1_1.setBounds(73, 0, 56, 21);
+        PrincipalOp.add(button_2_1_1);
+        
+        Button button_2_2 = new Button("<");
+        button_2_2.setBounds(11, 0, 56, 21);
+        PrincipalOp.add(button_2_2);
+        
+        Button button_1_1_1 = new Button("Open");
+        button_1_1_1.setBackground(SystemColor.textHighlight);
+        button_1_1_1.setBounds(240, 0, 67, 21);
+        PrincipalOp.add(button_1_1_1);
+        
+        Button button_1_2_1 = new Button("Save");
+        button_1_2_1.setBackground(SystemColor.textHighlight);
+        button_1_2_1.setBounds(328, 0, 67, 21);
+        PrincipalOp.add(button_1_2_1);
+        
+        Button button_1_3_1 = new Button("Print");
+        button_1_3_1.setBackground(SystemColor.textHighlight);
+        button_1_3_1.setBounds(408, 0, 67, 21);
+        PrincipalOp.add(button_1_3_1);
+        
+        Button button_1_4_1 = new Button("Help");
+        button_1_4_1.setBackground(SystemColor.textHighlight);
+        button_1_4_1.setBounds(483, 0, 67, 21);
+        PrincipalOp.add(button_1_4_1);
+        
+        Button button_3 = new Button("Log off");
+        button_3.setBackground(SystemColor.textHighlight);
+        button_3.setBounds(694, 0, 85, 21);
+        PrincipalOp.add(button_3);
+        
+         panel_1 = new JPanel();
+        panel_1.setLayout(null);
+        panel_1.setBackground(new Color(255, 222, 173));
+        panel_1.setBounds(251, 41, 618, 499);
+        panel_1.setVisible(false);
+        PrincipalOp.add(panel_1);
+        
+        JTextPane textPane_2 = new JTextPane();
+        textPane_2.setBackground(new Color(255, 250, 240));
+        textPane_2.setBounds(10, 49, 211, 72);
+        panel_1.add(textPane_2);
+        
+        Label label_2_2 = new Label("Devise N° :");
+        label_2_2.setBounds(362, 46, 67, 21);
+        panel_1.add(label_2_2);
+        
+        TextField textField_2_3 = new TextField();
+        textField_2_3.setBounds(435, 46, 101, 21);
+        panel_1.add(textField_2_3);
+        
+        TextField textField_3_3 = new TextField();
+        textField_3_3.setBounds(435, 73, 101, 21);
+        panel_1.add(textField_3_3);
+        
+        Label label_3_2 = new Label("Customer :");
+        label_3_2.setBounds(362, 73, 67, 21);
+        panel_1.add(label_3_2);
+        
+        Label label_5_1 = new Label("Tel :");
+        label_5_1.setBounds(362, 100, 41, 21);
+        panel_1.add(label_5_1);
+        
+        JSeparator separator_1_1 = new JSeparator();
+        separator_1_1.setBounds(21, 128, 516, 2);
+        panel_1.add(separator_1_1);
+        
+        JSeparator separator_3 = new JSeparator();
+        separator_3.setOrientation(SwingConstants.VERTICAL);
+        separator_3.setBounds(301, 47, 7, 158);
+        panel_1.add(separator_3);
+        
+        TextField textField_22 = new TextField();
+        textField_22.setBounds(335, 172, 101, 21);
+        panel_1.add(textField_22);
+        
+        Label label_6 = new Label("Date / Heure");
+        label_6.setBounds(335, 145, 85, 21);
+        panel_1.add(label_6);
+        
+        TextField textField_4_2 = new TextField();
+        textField_4_2.setBounds(453, 172, 85, 21);
+        panel_1.add(textField_4_2);
+        
+        Label label_4_2 = new Label("Durée");
+        label_4_2.setBounds(486, 145, 67, 21);
+        panel_1.add(label_4_2);
+        
+        TextField textField_1_3 = new TextField();
+        textField_1_3.setBounds(12, 172, 193, 21);
+        panel_1.add(textField_1_3);
+        
+        Label label_1_4 = new Label("Operator");
+        label_1_4.setBounds(64, 140, 83, 21);
+        panel_1.add(label_1_4);
+        
+        JSeparator separator_1_1_2 = new JSeparator();
+        separator_1_1_2.setBounds(20, 203, 516, 2);
+        panel_1.add(separator_1_1_2);
+        
+        Label label_1_1_2 = new Label("Description");
+        label_1_1_2.setBounds(45, 225, 83, 21);
+        panel_1.add(label_1_1_2);
+        
+        JEditorPane editorPane_2 = new JEditorPane();
+        editorPane_2.setBounds(45, 252, 487, 44);
+        panel_1.add(editorPane_2);
+        
+        Label label_1_1_1_2 = new Label("Comments/Observations");
+        label_1_1_1_2.setBounds(45, 306, 158, 21);
+        panel_1.add(label_1_1_1_2);
+        
+        JEditorPane editorPane_1_1 = new JEditorPane();
+        editorPane_1_1.setBounds(45, 333, 505, 33);
+        panel_1.add(editorPane_1_1);
+        
+        JSeparator separator_2_1 = new JSeparator();
+        separator_2_1.setOrientation(SwingConstants.VERTICAL);
+        separator_2_1.setBounds(306, 374, 25, 93);
+        panel_1.add(separator_2_1);
+        
+        JSeparator separator_1_1_1_1 = new JSeparator();
+        separator_1_1_1_1.setBounds(20, 447, 516, 2);
+        panel_1.add(separator_1_1_1_1);
+        
+        TextField textField_1_1_1_2 = new TextField();
+        textField_1_1_1_2.setBounds(381, 406, 158, 35);
+        panel_1.add(textField_1_1_1_2);
+        
+        Label label_1_2_1_1 = new Label("Customer signature");
+        label_1_2_1_1.setBounds(422, 377, 123, 21);
+        panel_1.add(label_1_2_1_1);
+        
+        TextField textField_5_2 = new TextField();
+        textField_5_2.setBounds(435, 100, 101, 21);
+        panel_1.add(textField_5_2);
     }
 
     private void clearPanelAndShowPrincipal() {
@@ -981,7 +1198,22 @@ public class LOGIN {
         panelAddCUst.setVisible(false);
         panelDisplayList_1.setVisible(false);
     }
-
+    
+    private void clearPanelAndShowPrincipalOp() {
+        panel.setVisible(false);
+        PrincipalOp.setVisible(true);
+        
+    }
+    
+	
+	private void showPanel_1() {
+	       PrincipalOp.setVisible(true);
+	        panel_1.setVisible(true);	
+	    	
+	    }
+	
+	
+	
     private void showPanelAddCUst() {
        Principal.setVisible(true);
         panelAddCUst.setVisible(true);
@@ -1021,7 +1253,16 @@ public class LOGIN {
     	panelTicket.setVisible(false);
     	panelRequest.setVisible(true);	
     }
-  
+  //DECONNEXION
+   /*
+    private void showloginPane() {
+    	
+    	
+    	loginPane.setVisible();
+    	panelRequest.setVisible(true);	
+    }
+    */
+    
     private void showpanelAddCUst() {
     	panelDisplayList_1.setVisible(false);
     	panelAddCUst.setVisible(true);	
@@ -1047,26 +1288,8 @@ public class LOGIN {
         panelAcceuil.repaint();
     }
 
-    
-    
-   /* private void switchPanel() {
-        // Récupérer le panel actuellement affiché dans panelAccueil
-        Component[] components = panelAcceuil.getComponents();
-        for (Component component : components) {
-            if (component.isVisible() && component instanceof JPanel) {
-                JPanel currentPanel = (JPanel) component;
-                // Rendre le panel actuel invisible
-                currentPanel.setVisible(false);
-                break;
-            }
-        }
-
-        // Rendre le nouveau panel visible dans panelAccueil
-        panelRequest.setVisible(true);
-        panelAcceuil.add(panelRequest);
-        panelAcceuil.revalidate();
-        panelAcceuil.repaint();
     }
-    */
+  
 
-}
+    
+
